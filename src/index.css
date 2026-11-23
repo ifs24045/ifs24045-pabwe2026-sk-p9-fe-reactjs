@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --brand-50: #eef2ff;
+  --brand-100: #e0e7ff;
+  --brand-500: #6366f1;
+  --brand-600: #4f46e5;
+  --brand-700: #4338ca;
+}
+
+[data-accent='emerald'] {
+  --brand-50: #ecfdf5;
+  --brand-100: #d1fae5;
+  --brand-500: #10b981;
+  --brand-600: #059669;
+  --brand-700: #047857;
+}
+
+[data-accent='rose'] {
+  --brand-50: #fff1f2;
+  --brand-100: #ffe4e6;
+  --brand-500: #f43f5e;
+  --brand-600: #e11d48;
+  --brand-700: #be123c;
+}
+
+[data-accent='amber'] {
+  --brand-50: #fffbeb;
+  --brand-100: #fef3c7;
+  --brand-500: #f59e0b;
+  --brand-600: #d97706;
+  --brand-700: #b45309;
+}
+
+@theme inline {
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100;
+  }
+}
+
+.dark .toastui-editor-contents :is(p, li, td, th, h1, h2, h3, h4, h5, h6, blockquote) {
+  color: #e2e8f0;
+}
+
+.dark .toastui-editor-contents :is(h1, h2) {
+  border-color: #334155;
+}

@@ -1,0 +1,1 @@
+export const DEFAULT_CATEGORIES = ['Teknologi', 'Pendidikan', 'Gaya Hidup', 'Bisnis', 'Opini', 'Umum']
