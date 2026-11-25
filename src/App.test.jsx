@@ -114,10 +114,10 @@ describe('rute publik', () => {
     expect(screen.getByTestId('page-home')).toBeInTheDocument()
   })
 
-  it('menampilkan detail artikel di "/posts/:slug"', () => {
+  it('menampilkan detail artikel di "/posts/:slug"', async () => {
     renderAt('/posts/go-dasar')
 
-    expect(screen.getByTestId('page-post')).toHaveTextContent('go-dasar')
+    expect(await screen.findByTestId('page-post')).toHaveTextContent('go-dasar')
   })
 
   it('menampilkan 404 untuk path tidak dikenal dan bisa kembali ke beranda', async () => {
@@ -135,7 +135,7 @@ describe('rute publik', () => {
     const { user } = renderAt('/')
 
     await user.click(screen.getByRole('button', { name: 'buka-artikel' }))
-    expect(screen.getByTestId('page-post')).toHaveTextContent('go-dasar')
+    expect(await screen.findByTestId('page-post')).toHaveTextContent('go-dasar')
     expect(window.location.pathname).toBe('/posts/go-dasar')
 
     await user.click(screen.getByRole('button', { name: 'kembali' }))
@@ -153,7 +153,7 @@ describe('rute publik', () => {
       window.dispatchEvent(new PopStateEvent('popstate'))
     })
 
-    expect(screen.getByTestId('page-post')).toHaveTextContent('lain')
+    expect(await screen.findByTestId('page-post')).toHaveTextContent('lain')
     expect(screen.queryByTestId('auth-modal')).not.toBeInTheDocument()
   })
 })
@@ -180,7 +180,7 @@ describe('halaman autentikasi', () => {
 
     await user.click(screen.getByRole('button', { name: 'auth-anggota' }))
 
-    expect(screen.getByTestId('page-author')).toHaveAttribute('data-user', 'budi')
+    expect(await screen.findByTestId('page-author')).toHaveAttribute('data-user', 'budi')
     expect(window.location.pathname).toBe('/author')
     expect(screen.getByTestId('navbar')).toHaveAttribute('data-user', 'budi')
   })
@@ -190,7 +190,7 @@ describe('halaman autentikasi', () => {
 
     await user.click(screen.getByRole('button', { name: 'auth-admin' }))
 
-    expect(screen.getByTestId('page-admin')).toBeInTheDocument()
+    expect(await screen.findByTestId('page-admin')).toBeInTheDocument()
     expect(window.location.pathname).toBe('/admin')
   })
 
@@ -207,7 +207,7 @@ describe('halaman autentikasi', () => {
     await user.click(screen.getByRole('button', { name: 'modal-login' }))
 
     expect(screen.queryByTestId('auth-modal')).not.toBeInTheDocument()
-    expect(screen.getByTestId('page-author')).toBeInTheDocument()
+    expect(await screen.findByTestId('page-author')).toBeInTheDocument()
     expect(window.location.pathname).toBe('/author')
   })
 
@@ -366,7 +366,7 @@ describe('tema', () => {
 
     await user.click(screen.getByRole('button', { name: 'nav-tema' }))
     expect(screen.getByTestId('navbar')).toHaveAttribute('data-dark', 'true')
-    expect(screen.getByTestId('page-author')).toHaveAttribute('data-dark', 'true')
+    expect(await screen.findByTestId('page-author')).toHaveAttribute('data-dark', 'true')
     expect(document.documentElement.classList.contains('dark')).toBe(true)
 
     await user.click(screen.getByRole('button', { name: 'nav-aksen' }))

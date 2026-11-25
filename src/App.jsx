@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import useTheme from './hooks/useTheme'
 import { clearSession, getToken, getUser } from './helpers/apiHelper'
 import { getProfile, logout } from './features/auth/api/authApi'
@@ -6,9 +6,9 @@ import AuthPage from './features/auth/components/AuthPage'
 import AuthModal from './features/auth/modals/AuthModal'
 import StickyNavbar from './features/blog/components/StickyNavbar'
 import PublicArticleList from './features/blog/components/PublicArticleList'
-import PublicArticleDetail from './features/blog/components/PublicArticleDetail'
-import AuthorDashboard from './features/blog/components/AuthorDashboard'
-import AdminDashboard from './features/admin/components/AdminDashboard'
+const PublicArticleDetail = lazy(() => import('./features/blog/components/PublicArticleDetail'))
+const AuthorDashboard = lazy(() => import('./features/blog/components/AuthorDashboard'))
+const AdminDashboard = lazy(() => import('./features/admin/components/AdminDashboard'))
 
 const STATIC_ROUTES = {
   '/': 'home',
@@ -177,7 +177,15 @@ export default function App() {
           onLogout={handleLogout}
         />
       )}
-      {page}
+      <Suspense
+        fallback={
+          <p role="status" className="py-24 text-center text-slate-600 dark:text-slate-400">
+            Memuat halaman...
+          </p>
+        }
+      >
+        {page}
+      </Suspense>
       {authOpen && <AuthModal onClose={closeAuth} onAuthenticated={handleAuthenticated} onNavigate={navigate} />}
     </div>
   )
